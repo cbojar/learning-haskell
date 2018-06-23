@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns #-}
 module Fibonacci where
 
 import System.Environment
@@ -8,13 +9,13 @@ fibonacci n
     | otherwise = fibHelper n 0 1
     where
         fibHelper :: Integer -> Integer -> Integer -> Integer
-        fibHelper n a b
-            | n == 0 = a
-            | otherwise = fibHelper (n - 1) b (a + b)
+        fibHelper i !a !b
+            | i == 0 = a
+            | otherwise = fibHelper (i - 1) b (a + b)
 
 firstNumberFrom :: [String] -> Integer
 firstNumberFrom [] = 10
-firstNumberFrom args = read $ args !! 0
+firstNumberFrom (arg:_) = read $ arg
 
 main = do
     args <- getArgs
